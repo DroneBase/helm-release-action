@@ -31,10 +31,15 @@ function package() {
     RELEASE_DIR,
     // ...core.getInput('packageExtraArgs').split(/\s+/),
   ];
-  
+
   const version = core.getInput('version');
   if (version) {
     args.push('--version=' + version);
+  }
+
+  const appVersion = core.getInput('appVersion');
+  if (appVersion) {
+    args.push('--app-version=' + appVersion);
   }
 
   return args;
