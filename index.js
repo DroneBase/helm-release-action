@@ -24,7 +24,7 @@ function repo() {
 // Returns argument required to generate the chart package.
 function package() {
   const args = [
-    'pack',
+    'package',
     core.getInput('chart'),
     '--dependency-update',
     '--destination',
@@ -49,7 +49,6 @@ function package() {
 function push() {
   const releaseFile = path.join(RELEASE_DIR, fs.readdirSync(RELEASE_DIR)[0]);
   const args = [
-    's3',
     'push',
     releaseFile,
     REPO_ALIAS,
@@ -65,19 +64,8 @@ function push() {
   return args;
 }
 
-// Returns argument required to install helm-s3 and helm-pack plugins.
-function installPlugins() {
-  const plugins = [
-    'https://github.com/hypnoglow/helm-s3.git',
-    'https://github.com/thynquest/helm-pack.git',
-  ];
-
-  return Promise.all(plugins.map(plugin => exec.exec(HELM, ['plugin', 'install', plugin])));
-}
-
 async function main() {
   try {
-    await installPlugins();
     await exec.exec(HELM, repo()),
     await exec.exec(HELM, package()),
     await exec.exec(HELM, push())
