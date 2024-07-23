@@ -34,10 +34,11 @@ function package() {
 // Returns argument required to push the chart release to OCI repository.
 function push() {
   const releaseFile = path.join(RELEASE_DIR, fs.readdirSync(RELEASE_DIR)[0]);
+  const repo = core.getInput('repo', { required: true });
   const args = [
     'push',
     releaseFile,
-    REPO_ALIAS,
+    repo,
   ];
   
   const forceRelease = core.getInput('forceRelease', { required: true }) === 'true';
