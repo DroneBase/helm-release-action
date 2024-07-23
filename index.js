@@ -41,13 +41,6 @@ function push() {
     repo,
   ];
   
-  const forceRelease = core.getInput('forceRelease', { required: true }) === 'true';
-  if (forceRelease) {
-    args.push('--force');
-  } else {
-    args.push('--ignore-if-exists');
-  }
-
   return args;
 }
 
